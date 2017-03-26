@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="WindowsHelperANE" type="flex">
+    <CLASSES>
+      <root url="jar://$DOCUMENTS$/WindowsHelperANE/native_extension/ane/WindowsHelperANE.ane!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

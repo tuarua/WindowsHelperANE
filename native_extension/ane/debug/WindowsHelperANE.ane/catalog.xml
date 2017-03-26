@@ -1,0 +1,52 @@
+<?xml version="1.0" ?>
+<swc xmlns="http://www.adobe.com/flash/swccatalog/9">
+    <versions>
+        <swc version="1.2"/>
+        <flex version="4.7.0" build="354193" minimumSupportedVersion="3.0.0"/>
+        <compiler name="ActionScript Compiler" version="2.0.0" build="354193"/>
+    </versions>
+    <features>
+        <feature-script-deps/>
+    </features>
+    <libraries>
+        <library path="library.swf">
+            <script name="com/tuarua/DisplayDevice" mod="1490458751214">
+                <def id="com.tuarua:DisplayDevice"/>
+                <dep id="Boolean" type="s"/>
+                <dep id="Object" type="i"/>
+                <dep id="String" type="s"/>
+                <dep id="__AS3__.vec:Vector" type="s"/>
+                <dep id="com.tuarua:DisplaySettings" type="s"/>
+                <dep id="com.tuarua:Monitor" type="s"/>
+            </script>
+            <script name="com/tuarua/DisplaySettings" mod="1490454470266">
+                <def id="com.tuarua:DisplaySettings"/>
+                <dep id="Object" type="i"/>
+                <dep id="int" type="s"/>
+            </script>
+            <script name="com/tuarua/Monitor" mod="1490455657051">
+                <def id="com.tuarua:Monitor"/>
+                <dep id="Object" type="i"/>
+                <dep id="String" type="s"/>
+            </script>
+            <script name="com/tuarua/WindowsHelperANE" mod="1490464824224">
+                <def id="com.tuarua:WindowsHelperANE"/>
+                <dep id="Boolean" type="s"/>
+                <dep id="Error" type="s"/>
+                <dep id="Function" type="s"/>
+                <dep id="Object" type="e"/>
+                <dep id="String" type="s"/>
+                <dep id="__AS3__.vec:Vector" type="e"/>
+                <dep id="com.tuarua:DisplayDevice" type="e"/>
+                <dep id="flash.events:EventDispatcher" type="i"/>
+                <dep id="flash.events:StatusEvent" type="e"/>
+                <dep id="flash.external:ExtensionContext" type="s"/>
+                <dep id="int" type="s"/>
+                <dep id="trace" type="e"/>
+            </script>
+            <digests>
+                <digest type="SHA-256" signed="false" value="59ce7ed37d7b7c69c05e953ef55a8f4377300a74c155250be88d33fde9f5bd83"/>
+            </digests>
+        </library>
+    </libraries>
+</swc>
