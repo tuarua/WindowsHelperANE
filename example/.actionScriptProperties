@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<actionScriptProperties analytics="false" mainApplicationPath="WindowsHelperANEExample.as" projectUUID="07d936dc-cebd-46c0-9630-027c729f5aca" version="11">
+<actionScriptProperties analytics="false" mainApplicationPath="Main.as" projectUUID="07d936dc-cebd-46c0-9630-027c729f5aca" version="11">
   <compiler additionalCompilerArguments="-locale en_US" advancedTelemetry="false" autoRSLOrdering="true" copyDependentFiles="true" fteInMXComponents="false" generateAccessible="false" htmlExpressInstall="true" htmlGenerate="false" htmlHistoryManagement="false" htmlPlayerVersionCheck="true" includeNetmonSwc="false" outputFolderPath="bin-debug" removeUnusedRSL="true" sourceFolderPath="src" strict="true" targetPlayerVersion="0.0.0" useApolloConfig="true" useDebugRSLSwfs="true" useFlashSDK="true" verifyDigests="true" warn="true">
     <compilerSourcePath/>
     <libraryPath defaultLinkType="0">
@@ -35,9 +35,6 @@
     <sourceAttachmentPath/>
   </compiler>
   <applications>
-    <application path="WindowsHelperANEExample.as">
-      <airExcludes/>
-    </application>
     <application path="Main.as">
       <airExcludes/>
     </application>
@@ -48,9 +45,15 @@
   <flashCatalyst validateFlashCatalystCompatibility="false"/>
   <buildTargets>
     <buildTarget buildTargetName="default" platformId="default">
-      <airSettings airCertificatePath="" airTimestamp="true" anePathSet="false" version="1">
+      <airSettings airCertificatePath="D:/dev/flash/TuaRua2017.p12" airTimestamp="true" anePathSet="true" version="1">
         <airExcludes/>
-        <anePaths/>
+        <anePaths>
+          <anePathEntry path="${DOCUMENTS}/WindowsHelperANE/native_extension/ane/WindowsHelperANE.ane"/>
+        </anePaths>
+        <newLaunchParams/>
+        <modifiedLaunchParams/>
+        <newPackagingParams/>
+        <modifiedPackagingParams/>
       </airSettings>
       <actionScriptSettings version="1"/>
     </buildTarget>

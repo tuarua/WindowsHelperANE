@@ -2,6 +2,7 @@
  * Copyright Tua Rua Ltd. (c) 2017.
  */
 package com.tuarua {
+import flash.desktop.NativeApplication;
 import flash.events.EventDispatcher;
 import flash.events.StatusEvent;
 import flash.external.ExtensionContext;
@@ -11,6 +12,7 @@ public class WindowsHelperANE extends EventDispatcher {
     private var extensionContext:ExtensionContext;
     private var _isInited:Boolean = false;
     private var _isSupported:Boolean = false;
+
 
     public function WindowsHelperANE() {
         initiate();
@@ -30,16 +32,28 @@ public class WindowsHelperANE extends EventDispatcher {
 
 
     private function gotEvent(event:StatusEvent):void {
-        var keyName:String;
-        var argsAsJSON:Object;
         var pObj:Object;
+        //trace(event.level);
         switch (event.level) {
             case "TRACE":
                 trace(event.code);
                 break;
+            case HotKeyEvent.ON_HOT_KEY:
+                try {
+                    pObj = JSON.parse(event.code);
+                    dispatchEvent(new HotKeyEvent(HotKeyEvent.ON_HOT_KEY, pObj));
+                } catch (e:Error) {
+                    trace(e.message);
+                }
+                break;
             default:
                 break;
         }
+    }
+
+
+    public function init():void {
+        extensionContext.call("init");
     }
 
     public function findWindowByTitle(searchTerm:String):String {
@@ -48,6 +62,14 @@ public class WindowsHelperANE extends EventDispatcher {
 
     public function showWindow(maximise:Boolean = false):void {
         extensionContext.call("showWindow", maximise);
+    }
+
+    public function restartApp(delay:int = 2):Boolean {
+        var success:Boolean = extensionContext.call("restartApp", delay);
+        if (success) {
+            NativeApplication.nativeApplication.exit();
+        }
+        return success;
     }
 
     public function setForegroundWindow():void {
@@ -60,6 +82,14 @@ public class WindowsHelperANE extends EventDispatcher {
 
     public function setDisplayResolution(key:String, width:int, height:int, refreshRate:int = 0):Boolean {
         return extensionContext.call("setDisplayResolution", key, width, height, refreshRate);
+    }
+
+    public function registerHotKey(keycode:int, modifier:int):int {
+        return int(extensionContext.call("registerHotKey", keycode, modifier));
+    }
+
+    public function unregisterHotKey(id:int):void {
+        extensionContext.call("unregisterHotKey", id);
     }
 
     public function isSupported():Boolean {

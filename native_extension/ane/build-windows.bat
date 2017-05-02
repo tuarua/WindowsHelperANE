@@ -1,7 +1,7 @@
 REM Get the path to the script and trim to get the directory.
 @echo off
 SET SZIP="C:\Program Files\7-Zip\7z.exe"
-SET AIR_PATH="D:\dev\sdks\AIR\AIRSDK_24\bin\"
+SET AIR_PATH="D:\dev\sdks\AIR\AIRSDK_25\bin\"
 echo Setting path to current directory to:
 SET pathtome=%~dp0
 echo %pathtome%
@@ -42,6 +42,20 @@ echo Copying native libraries into place.
 
 copy %pathtome%..\..\native_library\win\%projectName%\Release\%projectName%.dll %pathtome%platforms\win\release
 copy %pathtome%..\..\native_library\win\%projectName%\Debug\%projectName%.dll %pathtome%platforms\win\debug
+
+copy %pathtome%..\..\native_library\win\%projectName%\Debug\%projectName%Lib.dll %AIR_PATH%%projectName%Lib.dll
+copy %pathtome%..\..\native_library\win\%projectName%\Debug\%projectName%Lib.pdb %AIR_PATH%%projectName%Lib.pdb
+
+copy %pathtome%..\..\native_library\win\%projectName%\Release\%projectName%Lib.dll %pathtome%..\..\c_sharp_libs\%projectName%Lib.dll
+
+copy %pathtome%..\..\native_library\win\%projectName%\Debug\FreSharpCore.dll %AIR_PATH%FreSharpCore.dll
+copy %pathtome%..\..\native_library\win\%projectName%\Debug\FreSharpCore.pdb %AIR_PATH%FreSharpCore.pdb
+
+copy %pathtome%..\..\native_library\win\%projectName%\Debug\FreSharp.dll %AIR_PATH%FreSharp.dll
+copy %pathtome%..\..\native_library\win\%projectName%\Debug\FreSharp.pdb %AIR_PATH%FreSharp.pdb
+
+copy %pathtome%..\..\native_library\win\%projectName%\Release\FreSharpCore.dll %pathtome%..\..\c_sharp_libs\FreSharpCore.dll
+copy %pathtome%..\..\native_library\win\%projectName%\Release\FreSharp.dll %pathtome%..\..\c_sharp_libs\FreSharp.dll
 
 REM Run the build command.
 echo Building Release.
