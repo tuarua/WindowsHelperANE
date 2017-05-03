@@ -9,6 +9,21 @@
     </features>
     <libraries>
         <library path="library.swf">
+            <script name="com/tuarua/ANEError" mod="1493572172445">
+                <def id="com.tuarua:ANEError"/>
+                <dep id="Array" type="s"/>
+                <dep id="Error" type="i"/>
+                <dep id="String" type="s"/>
+                <dep id="int" type="s"/>
+            </script>
+            <script name="com/tuarua/ANEUtils" mod="1492703060448">
+                <def id="com.tuarua:ANEUtils"/>
+                <dep id="Object" type="i"/>
+                <dep id="String" type="s"/>
+                <dep id="XML" type="e"/>
+                <dep id="__AS3__.vec:Vector" type="e"/>
+                <dep id="flash.utils:describeType" type="e"/>
+            </script>
             <script name="com/tuarua/DisplayDevice" mod="1490458751214">
                 <def id="com.tuarua:DisplayDevice"/>
                 <dep id="Boolean" type="s"/>
@@ -59,7 +74,7 @@
                 <dep id="trace" type="e"/>
             </script>
             <digests>
-                <digest type="SHA-256" signed="false" value="cab182cae6b2d8deb01e7b58a9d6924a3f84ee3de033b0385003e890211a6ebc"/>
+                <digest type="SHA-256" signed="false" value="1ea59a51229f8e7878307d97cc0ffec929f392915c60cdc2f2afed6be83f3e4a"/>
             </digests>
         </library>
     </libraries>
