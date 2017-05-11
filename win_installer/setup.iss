@@ -106,7 +106,7 @@ begin
 
 
 #ifdef use_dotnetfx46
-    dotnetfx46(50); // min allowed version is 4.5.0
+    dotnetfx46(52); // min allowed version is 4.5.2
 #endif
 
 #ifdef use_vc2015
