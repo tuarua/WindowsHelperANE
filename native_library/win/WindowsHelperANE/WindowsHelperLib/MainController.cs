@@ -43,11 +43,11 @@ namespace WindowsHelperLib {
             return FREObject.Zero;
         }
 
-        private static void HotKeyManager_HotKeyPressed(object sender, HotKeyEventArgs e) {
-            var key = (int)e.Key;
-            var modifier = (int)e.Modifiers;
+        private void HotKeyManager_HotKeyPressed(object sender, HotKeyEventArgs e) {
+            var key = Convert.ToInt32(e.Key);
+            var modifier = Convert.ToInt32(e.Modifiers);
             var sf = $"{{\"key\": { key}, \"modifier\": { modifier}}}";
-            FreSharpHelper.DispatchEvent("ON_HOT_KEY", sf);
+            Context.DispatchEvent("ON_HOT_KEY", sf);
             /*
              Alt = 1,
         Control = 2,
@@ -58,8 +58,8 @@ namespace WindowsHelperLib {
         }
 
         public FREObject RegisterHotKey(FREContext ctx, uint argc, FREObject[] argv) {
-            var key = (int)new FreObjectSharp(argv[0]).Value;
-            var modifier = (int)new FreObjectSharp(argv[1]).Value;
+            var key = Convert.ToInt32(new FreObjectSharp(argv[0]).Value);
+            var modifier = Convert.ToInt32(new FreObjectSharp(argv[1]).Value);
             var id = HotKeyManager.RegisterHotKey((Keys)key, (KeyModifiers)modifier);
             if (!_isHotKeyManagerRegistered) {
                 HotKeyManager.HotKeyPressed += HotKeyManager_HotKeyPressed;
@@ -69,17 +69,18 @@ namespace WindowsHelperLib {
         }
 
         public FREObject UnregisterHotKey(FREContext ctx, uint argc, FREObject[] argv) {
-            var id = (int)new FreObjectSharp(argv[0]).Value;
+            var id = Convert.ToInt32(new FreObjectSharp(argv[0]).Value);
             HotKeyManager.UnregisterHotKey(id);
             return FREObject.Zero;
         }
 
 
         public FREObject FindWindowByTitle(FREContext ctx, uint argc, FREObject[] argv) {
-            var searchTerm = new FreObjectSharp(argv[0]).Value as string;
+            var searchTerm = Convert.ToString(new FreObjectSharp(argv[0]).Value);
             // ReSharper disable once SuggestVarOrType_SimpleTypes
+
             foreach (var pList in Process.GetProcesses()) {
-                if (searchTerm != null && !pList.MainWindowTitle.Contains(searchTerm)) continue;
+                if (!string.IsNullOrEmpty(searchTerm) && !pList.MainWindowTitle.Contains(searchTerm)) continue;
                 _foundWindow = pList.MainWindowHandle;
                 return new FreObjectSharp(pList.MainWindowTitle).RawValue;
             }
@@ -217,12 +218,12 @@ namespace WindowsHelperLib {
         }
 
         public FREObject SetDisplayResolution(FREContext ctx, uint argc, FREObject[] argv) {
-            var key = new FreObjectSharp(argv[0]).Value as string;
-            var newWidth = (int)new FreObjectSharp(argv[1]).Value;
-            var newHeight = (int)new FreObjectSharp(argv[2]).Value;
-            var newRefreshRate = (int)new FreObjectSharp(argv[3]).Value;
+            var key = Convert.ToString(new FreObjectSharp(argv[0]).Value);
+            var newWidth = Convert.ToInt32(new FreObjectSharp(argv[1]).Value);
+            var newHeight = Convert.ToInt32(new FreObjectSharp(argv[2]).Value);
+            var newRefreshRate = Convert.ToInt32(new FreObjectSharp(argv[3]).Value);
 
-            if (key != null) {
+            if (!string.IsNullOrEmpty(key)) {
                 var device = _displayDeviceMap[key];
                 var dm = new Devmode();
                 dm.dmSize = (short)Marshal.SizeOf(dm);
@@ -251,7 +252,7 @@ namespace WindowsHelperLib {
         }
 
         public FREObject RestartApp(FREContext ctx, uint argc, FREObject[] argv) {
-            var delay = (int)new FreObjectSharp(argv[0]).Value;
+            var delay = Convert.ToInt32(new FreObjectSharp(argv[0]).Value);
             var wmiQuery =
                 $"select CommandLine from Win32_Process where Name='{Process.GetCurrentProcess().ProcessName}.exe'";
             var searcher = new ManagementObjectSearcher(wmiQuery);
