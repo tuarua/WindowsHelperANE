@@ -28,7 +28,7 @@ public class Main extends Sprite {
         btn.graphics.beginFill(0x0033FF);
         btn.graphics.drawRect(0, 0, 100, 100);
         btn.graphics.endFill();
-        btn.addEventListener(MouseEvent.CLICK, onAddHotKey);
+        btn.addEventListener(MouseEvent.CLICK, onGetDisplayDevices);
         addChild(btn);
     }
 
@@ -70,6 +70,7 @@ public class Main extends Sprite {
     }
 
     private function onAddHotKey(event:MouseEvent):void {
+        trace("add a hot key")
         var hotKeyId1:int = ane.registerHotKey(Keyboard.A, HotKeyModifier.ALT);
         var hotKeyId2:int = ane.registerHotKey(Keyboard.F10, HotKeyModifier.CONTROL);
         var hotKeyId3:int = ane.registerHotKey(Keyboard.X, HotKeyModifier.SHIFT);
@@ -90,6 +91,7 @@ public class Main extends Sprite {
 
     private function onGetDisplayDevices(event:MouseEvent):void {
         var displayDevices:Vector.<DisplayDevice> = ane.getDisplayDevices();
+
 
         for each (var dd:Object in displayDevices) {
             trace(dd.currentDisplaySettings.width, dd.currentDisplaySettings.height);

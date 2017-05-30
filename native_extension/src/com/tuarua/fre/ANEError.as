@@ -1,8 +1,8 @@
 /**
  * Created by Eoin Landy on 29/04/2017.
  */
-package com.tuarua {
-[RemoteClass(alias="com.tuarua.ANEError")]
+package com.tuarua.fre {
+[RemoteClass(alias="com.tuarua.fre.ANEError")]
 public class ANEError extends Error {
     private var _stackTrace:String;
     private var _source:String;
@@ -44,6 +44,10 @@ public class ANEError extends Error {
 
     public function get type():String {
         return _type;
+    }
+
+    public function get source():String {
+        return _source;
     }
 }
 }

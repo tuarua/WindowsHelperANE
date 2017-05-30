@@ -173,8 +173,11 @@
     <ClInclude Include="..\..\..\include\FlashRuntimeExtensions.h" />
     <ClInclude Include="..\..\..\include\stdafx.h" />
     <ClInclude Include="..\..\..\include\WindowsHelperANE.h" />
+    <ClInclude Include="..\..\..\source\FreNamespace.h" />
+    <ClInclude Include="..\..\..\source\FreSharpBridge.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\source\FreSharpBridge.cpp" />
     <ClCompile Include="..\..\..\source\WindowsHelperANE.cpp" />
   </ItemGroup>
   <ItemGroup>
