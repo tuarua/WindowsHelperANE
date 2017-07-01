@@ -10,6 +10,7 @@ getDisplayDevices()
 setDisplayResolution()   
 registerHotKey()   
 unregisterHotKey()   
+getNumLogicalProcessors()   
 
 
 ##### Windows Installation - Important!
