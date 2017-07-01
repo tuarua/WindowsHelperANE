@@ -32,6 +32,11 @@ public class Main extends Sprite {
         addChild(btn);
     }
 
+    private function getNumLogicalProcessors():void {
+        var numLogicalProcessors:int = ane.getNumLogicalProcessors();
+        trace("numLogicalProcessors", numLogicalProcessors);
+    }
+
     private function onRestartApp(event:MouseEvent):void {
         var isRestarting:Boolean = ane.restartApp(1);
         trace(isRestarting);
@@ -83,6 +88,7 @@ public class Main extends Sprite {
 
 
     }
+
     private function removeAllHotKeys():void {
         for each (var hotKey:int in hotKeyIds) {
             ane.unregisterHotKey(hotKey);
@@ -91,8 +97,6 @@ public class Main extends Sprite {
 
     private function onGetDisplayDevices(event:MouseEvent):void {
         var displayDevices:Vector.<DisplayDevice> = ane.getDisplayDevices();
-
-
         for each (var dd:Object in displayDevices) {
             trace(dd.currentDisplaySettings.width, dd.currentDisplaySettings.height);
             trace(dd.key)

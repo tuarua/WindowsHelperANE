@@ -93,6 +93,10 @@ public class WindowsHelperANE extends EventDispatcher {
         ANEContext.ctx.call("unregisterHotKey", id);
     }
 
+    public function getNumLogicalProcessors():int {
+        return int(ANEContext.ctx.call("getNumLogicalProcessors"));
+    }
+
     public function isSupported():Boolean {
         return _isSupported;
     }

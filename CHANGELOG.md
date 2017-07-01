@@ -1,5 +1,8 @@
+### 0.0.6  
+- Added new method getNumLogicalProcessors()
+
 ### 0.0.5  
-- Use FreSharp 1.0.6
+- Use FreSharp 1.0.7
 
 ### 0.0.4  
 - Use FreSharp 1.0.6

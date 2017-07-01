@@ -2,7 +2,7 @@
 <swc xmlns="http://www.adobe.com/flash/swccatalog/9">
     <versions>
         <swc version="1.2"/>
-        <compiler name="ActionScript Compiler" version="2.0.0" build="354193"/>
+        <compiler name="ActionScript Compiler" version="2.0.0" build="354203"/>
     </versions>
     <features>
         <feature-script-deps/>
@@ -40,7 +40,7 @@
                 <dep id="Object" type="i"/>
                 <dep id="String" type="s"/>
             </script>
-            <script name="com/tuarua/WindowsHelperANE" mod="1496181714665">
+            <script name="com/tuarua/WindowsHelperANE" mod="1498851937654">
                 <def id="com.tuarua:WindowsHelperANE"/>
                 <dep id="Boolean" type="s"/>
                 <dep id="Error" type="s"/>
@@ -136,7 +136,7 @@
                 <dep id="flash.system:Capabilities" type="e"/>
             </script>
             <digests>
-                <digest type="SHA-256" signed="false" value="a31f3ff1f4d71316ac661b87e59df0baf35bee74c6c6447177d10fd5c385b9cb"/>
+                <digest type="SHA-256" signed="false" value="7b4b5a432f27c9d82e1e35e13e71976621c97951139853b8674894ef3fe61c4f"/>
             </digests>
         </library>
     </libraries>

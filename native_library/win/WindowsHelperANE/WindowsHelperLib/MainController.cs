@@ -33,6 +33,7 @@ namespace WindowsHelperLib {
                     {"restartApp", RestartApp},
                     {"registerHotKey", RegisterHotKey},
                     {"unregisterHotKey", UnregisterHotKey},
+                    {"getNumLogicalProcessors",GetNumLogicalProcessors}
                 };
 
             return FunctionsDict.Select(kvp => kvp.Key).ToArray();
@@ -74,11 +75,13 @@ namespace WindowsHelperLib {
             return FREObject.Zero;
         }
 
+        public FREObject GetNumLogicalProcessors(FREContext ctx, uint argc, FREObject[] argv) {
+            return new FreObjectSharp(Environment.ProcessorCount).RawValue;
+        }
 
         public FREObject FindWindowByTitle(FREContext ctx, uint argc, FREObject[] argv) {
             var searchTerm = Convert.ToString(new FreObjectSharp(argv[0]).Value);
             // ReSharper disable once SuggestVarOrType_SimpleTypes
-
             foreach (var pList in Process.GetProcesses()) {
                 if (!string.IsNullOrEmpty(searchTerm) && !pList.MainWindowTitle.Contains(searchTerm)) continue;
                 _foundWindow = pList.MainWindowHandle;
