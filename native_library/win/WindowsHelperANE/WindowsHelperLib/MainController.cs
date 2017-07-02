@@ -6,6 +6,7 @@ using System.Management;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using TuaRua.FreSharp;
+using TuaRua.FreSharp.Internal;
 using static WindowsHelperLib.ShowWindowCommands;
 using FREObject = System.IntPtr;
 using FREContext = System.IntPtr;
@@ -33,10 +34,16 @@ namespace WindowsHelperLib {
                     {"restartApp", RestartApp},
                     {"registerHotKey", RegisterHotKey},
                     {"unregisterHotKey", UnregisterHotKey},
-                    {"getNumLogicalProcessors",GetNumLogicalProcessors}
+                    {"getNumLogicalProcessors",GetNumLogicalProcessors},
+
+
                 };
 
             return FunctionsDict.Select(kvp => kvp.Key).ToArray();
+        }
+
+        public FREObject NotImplemented(FREContext ctx, uint argc, FREObject[] argv) {
+            return FREObject.Zero;
         }
 
         public FREObject InitController(FREContext ctx, uint argc, FREObject[] argv) {

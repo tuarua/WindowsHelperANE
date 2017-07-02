@@ -2,7 +2,6 @@
  * Copyright Tua Rua Ltd. (c) 2017.
  */
 package com.tuarua {
-import com.tuarua.fre.ANEContext;
 
 import flash.desktop.NativeApplication;
 import flash.events.EventDispatcher;
@@ -13,7 +12,7 @@ public class WindowsHelperANE extends EventDispatcher {
     private static const name:String = "WindowsHelperANE";
     private var _isInited:Boolean = false;
     private var _isSupported:Boolean = false;
-
+    private var ctx:ExtensionContext;
 
     public function WindowsHelperANE() {
         initiate();
@@ -23,8 +22,8 @@ public class WindowsHelperANE extends EventDispatcher {
         _isSupported = true;
         trace("[" + name + "] Initalizing ANE...");
         try {
-            ANEContext.ctx = ExtensionContext.createExtensionContext("com.tuarua." + name, null);
-            ANEContext.ctx.addEventListener(StatusEvent.STATUS, gotEvent);
+           ctx = ExtensionContext.createExtensionContext("com.tuarua." + name, null);
+            ctx.addEventListener(StatusEvent.STATUS, gotEvent);
         } catch (e:Error) {
             trace(e.message);
             trace("[" + name + "] ANE Not loaded properly.  Future calls will fail.");
@@ -54,19 +53,19 @@ public class WindowsHelperANE extends EventDispatcher {
 
 
     public function init():void {
-        ANEContext.ctx.call("init");
+        ctx.call("init");
     }
 
     public function findWindowByTitle(searchTerm:String):String {
-        return ANEContext.ctx.call("findWindowByTitle", searchTerm) as String;
+        return ctx.call("findWindowByTitle", searchTerm) as String;
     }
 
     public function showWindow(maximise:Boolean = false):void {
-        ANEContext.ctx.call("showWindow", maximise);
+        ctx.call("showWindow", maximise);
     }
 
     public function restartApp(delay:int = 2):Boolean {
-        var success:Boolean = ANEContext.ctx.call("restartApp", delay);
+        var success:Boolean = ctx.call("restartApp", delay);
         if (success) {
             NativeApplication.nativeApplication.exit();
         }
@@ -74,27 +73,27 @@ public class WindowsHelperANE extends EventDispatcher {
     }
 
     public function setForegroundWindow():void {
-        ANEContext.ctx.call("setForegroundWindow");
+        ctx.call("setForegroundWindow");
     }
 
     public function getDisplayDevices():Vector.<DisplayDevice> {
-        return ANEContext.ctx.call("getDisplayDevices") as Vector.<DisplayDevice>;
+        return ctx.call("getDisplayDevices") as Vector.<DisplayDevice>;
     }
 
     public function setDisplayResolution(key:String, width:int, height:int, refreshRate:int = 0):Boolean {
-        return ANEContext.ctx.call("setDisplayResolution", key, width, height, refreshRate);
+        return ctx.call("setDisplayResolution", key, width, height, refreshRate);
     }
 
     public function registerHotKey(keycode:int, modifier:int):int {
-        return int(ANEContext.ctx.call("registerHotKey", keycode, modifier));
+        return int(ctx.call("registerHotKey", keycode, modifier));
     }
 
     public function unregisterHotKey(id:int):void {
-        ANEContext.ctx.call("unregisterHotKey", id);
+        ctx.call("unregisterHotKey", id);
     }
 
     public function getNumLogicalProcessors():int {
-        return int(ANEContext.ctx.call("getNumLogicalProcessors"));
+        return int(ctx.call("getNumLogicalProcessors"));
     }
 
     public function isSupported():Boolean {
@@ -102,14 +101,14 @@ public class WindowsHelperANE extends EventDispatcher {
     }
 
     public function dispose():void {
-        if (!ANEContext.ctx) {
+        if (!ctx) {
             trace("[" + name + "] Error. ANE Already in a disposed or failed state...");
             return;
         }
         trace("[" + name + "] Unloading ANE...");
-        ANEContext.ctx.removeEventListener(StatusEvent.STATUS, gotEvent);
-        ANEContext.ctx.dispose();
-        ANEContext.ctx = null;
+        ctx.removeEventListener(StatusEvent.STATUS, gotEvent);
+        ctx.dispose();
+        ctx = null;
     }
 
 

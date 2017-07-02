@@ -28,11 +28,11 @@ public class Main extends Sprite {
         btn.graphics.beginFill(0x0033FF);
         btn.graphics.drawRect(0, 0, 100, 100);
         btn.graphics.endFill();
-        btn.addEventListener(MouseEvent.CLICK, onGetDisplayDevices);
+        btn.addEventListener(MouseEvent.CLICK, getNumLogicalProcessors);
         addChild(btn);
     }
 
-    private function getNumLogicalProcessors():void {
+    private function getNumLogicalProcessors(event:MouseEvent):void {
         var numLogicalProcessors:int = ane.getNumLogicalProcessors();
         trace("numLogicalProcessors", numLogicalProcessors);
     }

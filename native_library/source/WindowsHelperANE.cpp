@@ -13,18 +13,17 @@ extern "C" {
 		FreSharpBridge::GetFunctions();
 
 		static FRENamedFunction extensionFunctions[] = {
-		{ (const uint8_t *) "init","init", &callSharpFunction },
-		{ (const uint8_t *) "findWindowByTitle","findWindowByTitle", &callSharpFunction },
-		{ (const uint8_t *) "showWindow","showWindow", &callSharpFunction },
-		{ (const uint8_t *) "hideWindow","hideWindow", &callSharpFunction },
-		{ (const uint8_t *) "setForegroundWindow","setForegroundWindow", &callSharpFunction },
-		{ (const uint8_t *) "getDisplayDevices","getDisplayDevices", &callSharpFunction },
-		{ (const uint8_t *) "setDisplayResolution","setDisplayResolution", &callSharpFunction },
-		{ (const uint8_t *) "restartApp","restartApp", &callSharpFunction },
-		{ (const uint8_t *) "registerHotKey","registerHotKey", &callSharpFunction },
-		{ (const uint8_t *) "unregisterHotKey","unregisterHotKey", &callSharpFunction },
-		{ (const uint8_t *) "getNumLogicalProcessors","getNumLogicalProcessors", &callSharpFunction }
-		
+		{ (const uint8_t *) "init","init", &callSharpFunction }
+		,{ (const uint8_t *) "findWindowByTitle","findWindowByTitle", &callSharpFunction }
+		,{ (const uint8_t *) "showWindow","showWindow", &callSharpFunction }
+		,{ (const uint8_t *) "hideWindow","hideWindow", &callSharpFunction }
+		,{ (const uint8_t *) "setForegroundWindow","setForegroundWindow", &callSharpFunction }
+		,{ (const uint8_t *) "getDisplayDevices","getDisplayDevices", &callSharpFunction }
+		,{ (const uint8_t *) "setDisplayResolution","setDisplayResolution", &callSharpFunction }
+		,{ (const uint8_t *) "restartApp","restartApp", &callSharpFunction }
+		,{ (const uint8_t *) "registerHotKey","registerHotKey", &callSharpFunction }
+		,{ (const uint8_t *) "unregisterHotKey","unregisterHotKey", &callSharpFunction }
+		,{ (const uint8_t *) "getNumLogicalProcessors","getNumLogicalProcessors", &callSharpFunction }
 		};
 
 		*numFunctionsToSet = sizeof(extensionFunctions) / sizeof(FRENamedFunction);
