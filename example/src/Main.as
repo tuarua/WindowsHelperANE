@@ -23,6 +23,7 @@ public class Main extends Sprite {
     private var hotKeyIds:Array = [];
 
     public function Main() {
+        NativeApplication.nativeApplication.addEventListener(Event.EXITING, onExiting);
         this.addEventListener(Event.ACTIVATE, onActivated);
 
         btn.graphics.beginFill(0x0033FF);
@@ -52,7 +53,7 @@ public class Main extends Sprite {
             if (foundWindowTitle) {
                 trace("We have found window:", foundWindowTitle);
                 ane.setForegroundWindow();
-                ane.showWindow(true);//true to maximise
+                ane.showWindow(false);//true to maximise
             }
 
             trace("foundWindowTitle", foundWindowTitle);
@@ -75,7 +76,7 @@ public class Main extends Sprite {
     }
 
     private function onAddHotKey(event:MouseEvent):void {
-        trace("add a hot key")
+        trace("add a hot key");
         var hotKeyId1:int = ane.registerHotKey(Keyboard.A, HotKeyModifier.ALT);
         var hotKeyId2:int = ane.registerHotKey(Keyboard.F10, HotKeyModifier.CONTROL);
         var hotKeyId3:int = ane.registerHotKey(Keyboard.X, HotKeyModifier.SHIFT);
@@ -111,6 +112,10 @@ public class Main extends Sprite {
                 }
             }
         }
+    }
+
+    private function onExiting(event:Event):void {
+        ane.dispose();
     }
 
 }
