@@ -8,6 +8,8 @@ bin-release/
 bin-release-temp/
 cache/
 
+rundebug.bat
+
 *.app
 
 # Other files and folders

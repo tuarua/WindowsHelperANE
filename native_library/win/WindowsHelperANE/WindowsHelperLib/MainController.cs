@@ -6,7 +6,6 @@ using System.Management;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using TuaRua.FreSharp;
-using TuaRua.FreSharp.Internal;
 using static WindowsHelperLib.ShowWindowCommands;
 using FREObject = System.IntPtr;
 using FREContext = System.IntPtr;

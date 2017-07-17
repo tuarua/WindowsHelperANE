@@ -15,27 +15,27 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\include\FlashRuntimeExtensions.h">
+    <ClInclude Include="FreNamespace.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\include\stdafx.h">
+    <ClInclude Include="FreSharpBridge.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\include\WindowsHelperANE.h">
+    <ClInclude Include="FreSharpMacros.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\source\FreNamespace.h">
+    <ClInclude Include="stdafx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\source\FreSharpBridge.h">
+    <ClInclude Include="WindowsHelperANE.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\source\WindowsHelperANE.cpp">
+    <ClCompile Include="FreSharpBridge.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\source\FreSharpBridge.cpp">
+    <ClCompile Include="WindowsHelperANE.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

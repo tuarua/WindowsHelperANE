@@ -12,7 +12,8 @@ bin-release/
 .externalToolBuilders
 .model
 
-
+*.dll
+library.swf
 
 # Created by https://www.gitignore.io/api/intellij
 

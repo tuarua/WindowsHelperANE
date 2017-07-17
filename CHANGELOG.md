@@ -1,3 +1,7 @@
+### 0.0.7
+- Added 64bit support
+- Use FreSharp 1.0.9
+
 ### 0.0.6  
 - Added new method getNumLogicalProcessors()
 
