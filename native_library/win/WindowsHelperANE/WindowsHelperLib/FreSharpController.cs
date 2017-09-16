@@ -17,7 +17,7 @@ namespace WindowsHelperLib {
         }
 
         public void Trace(string value) {
-            Context.DispatchEvent("TRACE", value);
+            Context.SendEvent("TRACE", value);
         }
 
     }
