@@ -54,7 +54,7 @@ namespace WindowsHelperLib {
             var key = Convert.ToInt32(e.Key);
             var modifier = Convert.ToInt32(e.Modifiers);
             var sf = $"{{\"key\": {key}, \"modifier\": {modifier}}}";
-            Context.DispatchEvent("ON_HOT_KEY", sf);
+            Context.SendEvent("ON_HOT_KEY", sf);
             /*
              Alt = 1,
         Control = 2,
@@ -134,8 +134,8 @@ namespace WindowsHelperLib {
         }
 
         public FREObject GetDisplayDevices(FREContext ctx, uint argc, FREObject[] argv) {
-            var tmp = new FreObjectSharp("Vector.<com.tuarua.DisplayDevice>", null);
-            var vecDisplayDevices = new FreArraySharp(tmp.RawValue);
+            var tmp = new FREObject().Init("Vector.<com.tuarua.DisplayDevice>", null);
+            var vecDisplayDevices = new FREArray(tmp);
 
             var dd = new DisplayDevice();
             dd.cb = Marshal.SizeOf(dd);
@@ -146,15 +146,15 @@ namespace WindowsHelperLib {
                 uint index = 0;
                 uint cnt = 0;
                 while (WinApi.EnumDisplayDevices(null, index++, ref dd, 0)) {
-                    var displayDevice = new FreObjectSharp("com.tuarua.DisplayDevice", null);
-                    var displayMonitor = new FreObjectSharp("com.tuarua.Monitor", null);
+                    var displayDevice = new FREObject().Init("com.tuarua.DisplayDevice", null);
+                    var displayMonitor = new FREObject().Init("com.tuarua.Monitor", null);
 
-                    displayDevice.SetProperty("isPrimary",
+                    displayDevice.SetProp("isPrimary",
                         dd.StateFlags.HasFlag(DisplayDeviceStateFlags.PrimaryDevice));
-                    displayDevice.SetProperty("isActive",
+                    displayDevice.SetProp("isActive",
                         dd.StateFlags.HasFlag(DisplayDeviceStateFlags.AttachedToDesktop));
-                    displayDevice.SetProperty("isRemovable", dd.StateFlags.HasFlag(DisplayDeviceStateFlags.Removable));
-                    displayDevice.SetProperty("isVgaCampatible",
+                    displayDevice.SetProp("isRemovable", dd.StateFlags.HasFlag(DisplayDeviceStateFlags.Removable));
+                    displayDevice.SetProp("isVgaCampatible",
                         dd.StateFlags.HasFlag(DisplayDeviceStateFlags.VgaCompatible));
 
                     var monitor = new DisplayDevice();
@@ -174,8 +174,7 @@ namespace WindowsHelperLib {
                     availdm.dmSize = (short) Marshal.SizeOf(availdm);
                     IList<DisplaySettings> availableDisplaySettings = new List<DisplaySettings>();
 
-                    var freAvailableDisplaySettings =
-                        new FreArraySharp(displayDevice.GetProperty("availableDisplaySettings").RawValue);
+                    var freAvailableDisplaySettings = new FREArray(displayDevice.GetProp("availableDisplaySettings"));
 
                     uint cntAvailableSettings = 0;
                     for (var iModeNum = 0;
@@ -191,37 +190,37 @@ namespace WindowsHelperLib {
                         if (HasDisplaySetting(availableDisplaySettings, settings)) continue;
                         availableDisplaySettings.Add(settings);
 
-                        var displaySettings = new FreObjectSharp("com.tuarua.DisplaySettings", null);
+                        var displaySettings = new FREObject().Init("com.tuarua.DisplaySettings", null);
 
-                        displaySettings.SetProperty("width", availdm.dmPelsWidth);
-                        displaySettings.SetProperty("height", availdm.dmPelsHeight);
-                        displaySettings.SetProperty("refreshRate", availdm.dmDisplayFrequency);
-                        displaySettings.SetProperty("bitDepth", Convert.ToInt32(availdm.dmBitsPerPel));
-                        freAvailableDisplaySettings.SetObjectAt(displaySettings, cntAvailableSettings);
+                        displaySettings.SetProp("width", availdm.dmPelsWidth);
+                        displaySettings.SetProp("height", availdm.dmPelsHeight);
+                        displaySettings.SetProp("refreshRate", availdm.dmDisplayFrequency);
+                        displaySettings.SetProp("bitDepth", Convert.ToInt32(availdm.dmBitsPerPel));
+                        freAvailableDisplaySettings.Set(cntAvailableSettings, displaySettings);
                         cntAvailableSettings++;
                     }
 
-                    displayMonitor.SetProperty("friendlyName", monitor.DeviceString);
-                    displayMonitor.SetProperty("name", monitor.DeviceName);
-                    displayMonitor.SetProperty("id", monitor.DeviceID);
-                    displayMonitor.SetProperty("key", monitor.DeviceKey);
+                    displayMonitor.SetProp("friendlyName", monitor.DeviceString);
+                    displayMonitor.SetProp("name", monitor.DeviceName);
+                    displayMonitor.SetProp("id", monitor.DeviceID);
+                    displayMonitor.SetProp("key", monitor.DeviceKey);
 
-                    displayDevice.SetProperty("friendlyName", dd.DeviceString);
-                    displayDevice.SetProperty("name", dd.DeviceName);
-                    displayDevice.SetProperty("id", dd.DeviceID);
-                    displayDevice.SetProperty("key", dd.DeviceKey);
+                    displayDevice.SetProp("friendlyName", dd.DeviceString);
+                    displayDevice.SetProp("name", dd.DeviceName);
+                    displayDevice.SetProp("id", dd.DeviceID);
+                    displayDevice.SetProp("key", dd.DeviceKey);
 
-                    var currentDisplaySettings = new FreObjectSharp("com.tuarua.DisplaySettings", null);
+                    var currentDisplaySettings = new FREObject().Init("com.tuarua.DisplaySettings", null);
 
-                    currentDisplaySettings.SetProperty("width", dm.dmPelsWidth);
-                    currentDisplaySettings.SetProperty("height", dm.dmPelsHeight);
-                    currentDisplaySettings.SetProperty("refreshRate", dm.dmDisplayFrequency);
-                    currentDisplaySettings.SetProperty("bitDepth", Convert.ToInt32(dm.dmBitsPerPel));
+                    currentDisplaySettings.SetProp("width", dm.dmPelsWidth);
+                    currentDisplaySettings.SetProp("height", dm.dmPelsHeight);
+                    currentDisplaySettings.SetProp("refreshRate", dm.dmDisplayFrequency);
+                    currentDisplaySettings.SetProp("bitDepth", Convert.ToInt32(dm.dmBitsPerPel));
 
-                    displayDevice.SetProperty("currentDisplaySettings", currentDisplaySettings);
-                    displayDevice.SetProperty("monitor", displayMonitor);
+                    displayDevice.SetProp("currentDisplaySettings", currentDisplaySettings);
+                    displayDevice.SetProp("monitor", displayMonitor);
 
-                    vecDisplayDevices.SetObjectAt(displayDevice, cnt);
+                    vecDisplayDevices.Set(cnt, displayDevice);
 
                     _displayDeviceMap.Add(dd.DeviceKey, dd);
 
