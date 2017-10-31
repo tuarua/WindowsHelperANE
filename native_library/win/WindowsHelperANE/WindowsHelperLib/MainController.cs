@@ -134,6 +134,7 @@ namespace WindowsHelperLib {
         }
 
         public FREObject GetDisplayDevices(FREContext ctx, uint argc, FREObject[] argv) {
+            
             var tmp = new FREObject().Init("Vector.<com.tuarua.DisplayDevice>", null);
             var vecDisplayDevices = new FREArray(tmp);
 
