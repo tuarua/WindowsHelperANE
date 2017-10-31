@@ -224,6 +224,5 @@
   <!-- End of the schema for adding the android specific tags in AndroidManifest.xml file -->
   <extensions>
     <extensionID>com.tuarua.WindowsHelperANE</extensionID>
-    <extensionID>com.tuarua.FreSharpExampleANE</extensionID>
   </extensions>
 </application>

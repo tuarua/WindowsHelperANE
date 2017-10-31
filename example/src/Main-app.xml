@@ -277,6 +277,5 @@
 
 <extensions>
         <extensionID>com.tuarua.WindowsHelperANE</extensionID>
-	<extensionID>com.tuarua.FreSharpExampleANE</extensionID>
     </extensions>
 </application>
