@@ -1,3 +1,9 @@
+### 0.0.9
+- Fix bug with getDisplayDevices
+
+### 0.0.8
+- Use FreSharp 1.2.0
+
 ### 0.0.7
 - Added 64bit support
 - Use FreSharp 1.0.9

@@ -1,5 +1,5 @@
-package com.tuarua {[RemoteClass(alias="com.tuarua.DisplayDevice")]
-
+package com.tuarua {
+[RemoteClass(alias="com.tuarua.DisplayDevice")]
 public class DisplayDevice {
 	public var isPrimary:Boolean = false;
     public var isActive:Boolean = false;
@@ -14,12 +14,5 @@ public class DisplayDevice {
     public var availableDisplaySettings:Vector.<DisplaySettings> = new <DisplaySettings>[];
     public function DisplayDevice() {
     }
-    /*
-    public function addAvailableDisplaySettings(settings:DisplaySettings){
-
-
-    }
-    private function
-    */
 }
 }

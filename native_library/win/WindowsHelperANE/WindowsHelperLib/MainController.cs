@@ -196,7 +196,7 @@ namespace WindowsHelperLib {
                         displaySettings.SetProp("height", availdm.dmPelsHeight);
                         displaySettings.SetProp("refreshRate", availdm.dmDisplayFrequency);
                         displaySettings.SetProp("bitDepth", Convert.ToInt32(availdm.dmBitsPerPel));
-                        freAvailableDisplaySettings.Set(cntAvailableSettings, displaySettings);
+                        freAvailableDisplaySettings.Set(cntAvailableSettings, new FreObjectSharp(displaySettings));
                         cntAvailableSettings++;
                     }
 
@@ -217,10 +217,10 @@ namespace WindowsHelperLib {
                     currentDisplaySettings.SetProp("refreshRate", dm.dmDisplayFrequency);
                     currentDisplaySettings.SetProp("bitDepth", Convert.ToInt32(dm.dmBitsPerPel));
 
-                    displayDevice.SetProp("currentDisplaySettings", currentDisplaySettings);
-                    displayDevice.SetProp("monitor", displayMonitor);
+                    displayDevice.SetProp("currentDisplaySettings", new FreObjectSharp(currentDisplaySettings));
+                    displayDevice.SetProp("monitor", new FreObjectSharp(displayMonitor));
 
-                    vecDisplayDevices.Set(cnt, displayDevice);
+                    vecDisplayDevices.Set(cnt, new FreObjectSharp(displayDevice));
 
                     _displayDeviceMap.Add(dd.DeviceKey, dd);
 
