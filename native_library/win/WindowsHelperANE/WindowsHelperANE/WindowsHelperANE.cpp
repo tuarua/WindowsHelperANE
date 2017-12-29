@@ -1,7 +1,5 @@
 #include "FreSharpMacros.h"
 #include "WindowsHelperANE.h"
-#include "FlashRuntimeExtensions.h"
-#include "stdafx.h"
 #include "FreSharpBridge.h"
 
 extern "C" {
@@ -29,6 +27,7 @@ extern "C" {
 	}
 
 	CONTEXT_FIN(TRWH) {
+		FreSharpBridge::GetController()->OnFinalize();
 	}
 
 	EXTENSION_INIT(TRWH)

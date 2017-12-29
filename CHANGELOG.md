@@ -1,3 +1,6 @@
+### 0.1.0
+- Use FreSharp 1.3.0
+
 ### 0.0.9
 - Fix bug with getDisplayDevices
 

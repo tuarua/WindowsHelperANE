@@ -12,7 +12,7 @@ using FREContext = System.IntPtr;
 using Hwnd = System.IntPtr;
 
 namespace WindowsHelperLib {
-    public class MainController : FreSharpController {
+    public class MainController : FreSharpMainController {
         // ReSharper disable once NotAccessedField.Local
         private Hwnd _airWindow;
 
@@ -33,9 +33,7 @@ namespace WindowsHelperLib {
                     {"restartApp", RestartApp},
                     {"registerHotKey", RegisterHotKey},
                     {"unregisterHotKey", UnregisterHotKey},
-                    {"getNumLogicalProcessors",GetNumLogicalProcessors},
-
-
+                    {"getNumLogicalProcessors",GetNumLogicalProcessors}
                 };
 
             return FunctionsDict.Select(kvp => kvp.Key).ToArray();
@@ -65,28 +63,28 @@ namespace WindowsHelperLib {
         }
 
         public FREObject RegisterHotKey(FREContext ctx, uint argc, FREObject[] argv) {
-            var key = Convert.ToInt32(new FreObjectSharp(argv[0]).Value);
-            var modifier = Convert.ToInt32(new FreObjectSharp(argv[1]).Value);
+            var key = argv[0].AsInt();
+            var modifier = argv[1].AsInt();
             var id = HotKeyManager.RegisterHotKey((Keys) key, (KeyModifiers) modifier);
             if (!_isHotKeyManagerRegistered) {
                 HotKeyManager.HotKeyPressed += HotKeyManager_HotKeyPressed;
             }
             _isHotKeyManagerRegistered = true;
-            return new FreObjectSharp(id).RawValue;
+            return id.ToFREObject();
         }
 
         public FREObject UnregisterHotKey(FREContext ctx, uint argc, FREObject[] argv) {
-            var id = Convert.ToInt32(new FreObjectSharp(argv[0]).Value);
+            var id = argv[0].AsInt();
             HotKeyManager.UnregisterHotKey(id);
             return FREObject.Zero;
         }
 
         public FREObject GetNumLogicalProcessors(FREContext ctx, uint argc, FREObject[] argv) {
-            return new FreObjectSharp(Environment.ProcessorCount).RawValue;
+            return Environment.ProcessorCount.ToFREObject();
         }
 
         public FREObject FindWindowByTitle(FREContext ctx, uint argc, FREObject[] argv) {
-            var searchTerm = Convert.ToString(new FreObjectSharp(argv[0]).Value);
+            var searchTerm = argv[0].AsString();
             // ReSharper disable once SuggestVarOrType_SimpleTypes
             foreach (var pList in Process.GetProcesses()) {
                 if (!string.IsNullOrEmpty(searchTerm) && !pList.MainWindowTitle.Contains(searchTerm)) continue;
@@ -97,7 +95,7 @@ namespace WindowsHelperLib {
         }
 
         public FREObject ShowWindow(FREContext ctx, uint argc, FREObject[] argv) {
-            var maximise = (bool) new FreObjectSharp(argv[0]).Value;
+            var maximise = argv[0].AsBool();
             if (WinApi.IsWindow(_foundWindow)) {
                 WinApi.ShowWindow(_foundWindow, maximise ? SW_SHOWMAXIMIZED : SW_RESTORE);
             }
@@ -134,7 +132,6 @@ namespace WindowsHelperLib {
         }
 
         public FREObject GetDisplayDevices(FREContext ctx, uint argc, FREObject[] argv) {
-            
             var tmp = new FREObject().Init("Vector.<com.tuarua.DisplayDevice>", null);
             var vecDisplayDevices = new FREArray(tmp);
 
@@ -236,41 +233,39 @@ namespace WindowsHelperLib {
         }
 
         public FREObject SetDisplayResolution(FREContext ctx, uint argc, FREObject[] argv) {
-            var key = Convert.ToString(new FreObjectSharp(argv[0]).Value);
-            var newWidth = Convert.ToInt32(new FreObjectSharp(argv[1]).Value);
-            var newHeight = Convert.ToInt32(new FreObjectSharp(argv[2]).Value);
-            var newRefreshRate = Convert.ToInt32(new FreObjectSharp(argv[3]).Value);
+            var key = argv[0].AsString();
+            var newWidth = argv[1].AsInt();
+            var newHeight = argv[2].AsInt();
+            var newRefreshRate = argv[3].AsInt();
 
-            if (!string.IsNullOrEmpty(key)) {
-                var device = _displayDeviceMap[key];
-                var dm = new Devmode();
-                dm.dmSize = (short) Marshal.SizeOf(dm);
+            if (string.IsNullOrEmpty(key)) return FREObject.Zero;
+            var device = _displayDeviceMap[key];
+            var dm = new Devmode();
+            dm.dmSize = (short) Marshal.SizeOf(dm);
 
-                if (WinApi.EnumDisplaySettings(device.DeviceName, WinApi.EnumCurrentSettings, ref dm) == 0) {
-                    return new FreObjectSharp(false).RawValue;
-                }
-
-                dm.dmPelsWidth = newWidth;
-                dm.dmPelsHeight = newHeight;
-
-                var flgs = DevModeFlags.DM_PELSWIDTH | DevModeFlags.DM_PELSHEIGHT;
-
-                if (newRefreshRate > 0) {
-                    flgs |= DevModeFlags.DM_DISPLAYFREQUENCY;
-                    dm.dmDisplayFrequency = newRefreshRate;
-                }
-
-                dm.dmFields = (int) flgs;
-
-                return WinApi.ChangeDisplaySettings(ref dm, (int) ChangeDisplaySettingsFlags.CdsTest) != 0
-                    ? new FreObjectSharp(false).RawValue
-                    : new FreObjectSharp(WinApi.ChangeDisplaySettings(ref dm, 0) == 0).RawValue;
+            if (WinApi.EnumDisplaySettings(device.DeviceName, WinApi.EnumCurrentSettings, ref dm) == 0) {
+                return new FreObjectSharp(false).RawValue;
             }
-            return FREObject.Zero;
+
+            dm.dmPelsWidth = newWidth;
+            dm.dmPelsHeight = newHeight;
+
+            var flgs = DevModeFlags.DM_PELSWIDTH | DevModeFlags.DM_PELSHEIGHT;
+
+            if (newRefreshRate > 0) {
+                flgs |= DevModeFlags.DM_DISPLAYFREQUENCY;
+                dm.dmDisplayFrequency = newRefreshRate;
+            }
+
+            dm.dmFields = (int) flgs;
+
+            return WinApi.ChangeDisplaySettings(ref dm, (int) ChangeDisplaySettingsFlags.CdsTest) != 0
+                ? new FreObjectSharp(false).RawValue
+                : new FreObjectSharp(WinApi.ChangeDisplaySettings(ref dm, 0) == 0).RawValue;
         }
 
         public FREObject RestartApp(FREContext ctx, uint argc, FREObject[] argv) {
-            var delay = Convert.ToInt32(new FreObjectSharp(argv[0]).Value);
+            var delay = argv[0].AsInt();
             var wmiQuery =
                 $"select CommandLine from Win32_Process where Name='{Process.GetCurrentProcess().ProcessName}.exe'";
             var searcher = new ManagementObjectSearcher(wmiQuery);
@@ -285,7 +280,11 @@ namespace WindowsHelperLib {
                 FileName = "cmd.exe"
             };
             Process.Start(info);
-            return new FreObjectSharp(true).RawValue;
+            return true.ToFREObject();
+        }
+
+        public override void OnFinalize() {
+            
         }
     }
 }
