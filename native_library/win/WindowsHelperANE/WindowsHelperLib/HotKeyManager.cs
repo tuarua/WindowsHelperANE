@@ -2,7 +2,7 @@
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Forms;
-//http://stackoverflow.com/questions/3654787/global-hotkey-in-console-application
+
 namespace WindowsHelperLib {
     public static class HotKeyManager {
         public static event EventHandler<HotKeyEventArgs> HotKeyPressed;

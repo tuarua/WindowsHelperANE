@@ -46,18 +46,17 @@ public class Main extends Sprite {
             windowsHelper = new WindowsHelperANE();
             windowsHelper.init();
             windowsHelper.addEventListener(HotKeyEvent.ON_HOT_KEY, onHotKeyEvent);
-
-            /* var foundWindowTitle:String = windowsHelper.findWindowByTitle("Google Chrome");
+            var foundWindowTitle:String = windowsHelper.findWindowByTitle("Google Chrome");
              if (foundWindowTitle) {
                  trace("We have found window:", foundWindowTitle);
                  windowsHelper.setForegroundWindow();
                  windowsHelper.showWindow(false);//true to maximise
              }
 
-             trace("foundWindowTitle", foundWindowTitle);*/
+             trace("foundWindowTitle", foundWindowTitle);
 
 
-            var displayDevices:Vector.<DisplayDevice> = windowsHelper.getDisplayDevices();
+           /* var displayDevices:Vector.<DisplayDevice> = windowsHelper.getDisplayDevices();
             for each (var dd:DisplayDevice in displayDevices) {
                 if (dd.isPrimary && dd.isActive) {
                     trace("w x h", dd.currentDisplaySettings.width, dd.currentDisplaySettings.height);
@@ -65,7 +64,7 @@ public class Main extends Sprite {
                     trace("scale", scale);
                     break;
                 }
-            }
+            }*/
 
         }
         hasActivated = true;
