@@ -17,6 +17,8 @@
 	Using a reverse DNS-style name as the id is recommended. (Eg. com.example.ExampleApplication.) Required. -->
 	<id>Main</id>
 
+	<architecture>64</architecture>
+
 	<!-- Used as the filename for the application. Required. -->
 	<filename>Main</filename>
 

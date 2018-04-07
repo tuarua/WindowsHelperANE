@@ -89,7 +89,7 @@ namespace WindowsHelperLib {
             foreach (var pList in Process.GetProcesses()) {
                 if (!string.IsNullOrEmpty(searchTerm) && !pList.MainWindowTitle.Contains(searchTerm)) continue;
                 _foundWindow = pList.MainWindowHandle;
-                return new FreObjectSharp(pList.MainWindowTitle).RawValue;
+                return pList.MainWindowTitle.ToFREObject();
             }
             return FREObject.Zero;
         }
@@ -132,8 +132,7 @@ namespace WindowsHelperLib {
         }
 
         public FREObject GetDisplayDevices(FREContext ctx, uint argc, FREObject[] argv) {
-            var tmp = new FREObject().Init("Vector.<com.tuarua.DisplayDevice>", null);
-            var vecDisplayDevices = new FREArray(tmp);
+            var vecDisplayDevices = new FREArray("Vector.<com.tuarua.DisplayDevice>");
 
             var dd = new DisplayDevice();
             dd.cb = Marshal.SizeOf(dd);
@@ -144,8 +143,8 @@ namespace WindowsHelperLib {
                 uint index = 0;
                 uint cnt = 0;
                 while (WinApi.EnumDisplayDevices(null, index++, ref dd, 0)) {
-                    var displayDevice = new FREObject().Init("com.tuarua.DisplayDevice", null);
-                    var displayMonitor = new FREObject().Init("com.tuarua.Monitor", null);
+                    var displayDevice = new FREObject().Init("com.tuarua.DisplayDevice");
+                    var displayMonitor = new FREObject().Init("com.tuarua.Monitor");
 
                     displayDevice.SetProp("isPrimary",
                         dd.StateFlags.HasFlag(DisplayDeviceStateFlags.PrimaryDevice));
@@ -188,13 +187,13 @@ namespace WindowsHelperLib {
                         if (HasDisplaySetting(availableDisplaySettings, settings)) continue;
                         availableDisplaySettings.Add(settings);
 
-                        var displaySettings = new FREObject().Init("com.tuarua.DisplaySettings", null);
+                        var displaySettings = new FREObject().Init("com.tuarua.DisplaySettings");
 
                         displaySettings.SetProp("width", availdm.dmPelsWidth);
                         displaySettings.SetProp("height", availdm.dmPelsHeight);
                         displaySettings.SetProp("refreshRate", availdm.dmDisplayFrequency);
                         displaySettings.SetProp("bitDepth", Convert.ToInt32(availdm.dmBitsPerPel));
-                        freAvailableDisplaySettings.Set(cntAvailableSettings, new FreObjectSharp(displaySettings));
+                        freAvailableDisplaySettings.Set(cntAvailableSettings, displaySettings);
                         cntAvailableSettings++;
                     }
 
@@ -208,17 +207,17 @@ namespace WindowsHelperLib {
                     displayDevice.SetProp("id", dd.DeviceID);
                     displayDevice.SetProp("key", dd.DeviceKey);
 
-                    var currentDisplaySettings = new FREObject().Init("com.tuarua.DisplaySettings", null);
+                    var currentDisplaySettings = new FREObject().Init("com.tuarua.DisplaySettings");
 
                     currentDisplaySettings.SetProp("width", dm.dmPelsWidth);
                     currentDisplaySettings.SetProp("height", dm.dmPelsHeight);
                     currentDisplaySettings.SetProp("refreshRate", dm.dmDisplayFrequency);
                     currentDisplaySettings.SetProp("bitDepth", Convert.ToInt32(dm.dmBitsPerPel));
 
-                    displayDevice.SetProp("currentDisplaySettings", new FreObjectSharp(currentDisplaySettings));
-                    displayDevice.SetProp("monitor", new FreObjectSharp(displayMonitor));
+                    displayDevice.SetProp("currentDisplaySettings", currentDisplaySettings);
+                    displayDevice.SetProp("monitor", displayMonitor);
 
-                    vecDisplayDevices.Set(cnt, new FreObjectSharp(displayDevice));
+                    vecDisplayDevices.Set(cnt, displayDevice);
 
                     _displayDeviceMap.Add(dd.DeviceKey, dd);
 
@@ -244,7 +243,7 @@ namespace WindowsHelperLib {
             dm.dmSize = (short) Marshal.SizeOf(dm);
 
             if (WinApi.EnumDisplaySettings(device.DeviceName, WinApi.EnumCurrentSettings, ref dm) == 0) {
-                return new FreObjectSharp(false).RawValue;
+                return false.ToFREObject();
             }
 
             dm.dmPelsWidth = newWidth;
@@ -260,8 +259,8 @@ namespace WindowsHelperLib {
             dm.dmFields = (int) flgs;
 
             return WinApi.ChangeDisplaySettings(ref dm, (int) ChangeDisplaySettingsFlags.CdsTest) != 0
-                ? new FreObjectSharp(false).RawValue
-                : new FreObjectSharp(WinApi.ChangeDisplaySettings(ref dm, 0) == 0).RawValue;
+                ? false.ToFREObject()
+                : (WinApi.ChangeDisplaySettings(ref dm, 0) == 0).ToFREObject();
         }
 
         public FREObject RestartApp(FREContext ctx, uint argc, FREObject[] argv) {
@@ -272,7 +271,7 @@ namespace WindowsHelperLib {
             var retObjectCollection = searcher.Get();
             var sf = (from ManagementObject retObject in retObjectCollection select $"{retObject["CommandLine"]}")
                 .FirstOrDefault();
-            if (string.IsNullOrEmpty(sf)) return new FreObjectSharp(false).RawValue;
+            if (string.IsNullOrEmpty(sf)) return false.ToFREObject();
             var info = new ProcessStartInfo {
                 Arguments = "/C ping 127.0.0.1 -n " + delay + " && " + sf,
                 WindowStyle = ProcessWindowStyle.Hidden,

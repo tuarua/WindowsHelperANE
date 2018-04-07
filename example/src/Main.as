@@ -55,17 +55,6 @@ public class Main extends Sprite {
 
              trace("foundWindowTitle", foundWindowTitle);
 
-
-           /* var displayDevices:Vector.<DisplayDevice> = windowsHelper.getDisplayDevices();
-            for each (var dd:DisplayDevice in displayDevices) {
-                if (dd.isPrimary && dd.isActive) {
-                    trace("w x h", dd.currentDisplaySettings.width, dd.currentDisplaySettings.height);
-                    var scale:Number = dd.currentDisplaySettings.width / Capabilities.screenResolutionX;
-                    trace("scale", scale);
-                    break;
-                }
-            }*/
-
         }
         hasActivated = true;
     }
@@ -111,14 +100,13 @@ public class Main extends Sprite {
             if (dd.isPrimary && dd.isActive) {
                 trace("w x h", dd.currentDisplaySettings.width, dd.currentDisplaySettings.height);
                 var scale:Number = dd.currentDisplaySettings.width / Capabilities.screenResolutionX;
-                trace("scale", scale)
+                trace("scale", scale);
                 return;
             }
 
         }
 
         trace("displayDevices", displayDevices);
-        trace("sffs");
 
         /*if (displayDevices.length > 0) {
             var firstDisplay:DisplayDevice = displayDevices[0];
