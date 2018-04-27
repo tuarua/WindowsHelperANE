@@ -22,7 +22,7 @@ public class WindowsHelperANE extends EventDispatcher {
         _isSupported = true;
         trace("[" + name + "] Initalizing ANE...");
         try {
-           ctx = ExtensionContext.createExtensionContext("com.tuarua." + name, null);
+            ctx = ExtensionContext.createExtensionContext("com.tuarua." + name, null);
             ctx.addEventListener(StatusEvent.STATUS, gotEvent);
         } catch (e:Error) {
             trace(e.message);
@@ -94,6 +94,10 @@ public class WindowsHelperANE extends EventDispatcher {
 
     public function getNumLogicalProcessors():int {
         return int(ctx.call("getNumLogicalProcessors"));
+    }
+
+    public function startAtLogin(name:String, start:Boolean = true):void {
+        ctx.call("startAtLogin", name, start);
     }
 
     public function isSupported():Boolean {

@@ -27,8 +27,10 @@ public class Main extends Sprite {
         btn.graphics.endFill();
         btn.addEventListener(MouseEvent.CLICK, onGetDisplayDevices);
         addChild(btn);
+    }
 
-
+    private function startAtLogin(event:MouseEvent):void {
+        windowsHelper.startAtLogin("MyAirApp", true);
     }
 
     private function getNumLogicalProcessors(event:MouseEvent):void {

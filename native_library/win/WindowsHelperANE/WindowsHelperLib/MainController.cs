@@ -5,6 +5,7 @@ using System.Linq;
 using System.Management;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using Microsoft.Win32;
 using TuaRua.FreSharp;
 using static WindowsHelperLib.ShowWindowCommands;
 using FREObject = System.IntPtr;
@@ -33,7 +34,8 @@ namespace WindowsHelperLib {
                     {"restartApp", RestartApp},
                     {"registerHotKey", RegisterHotKey},
                     {"unregisterHotKey", UnregisterHotKey},
-                    {"getNumLogicalProcessors",GetNumLogicalProcessors}
+                    {"getNumLogicalProcessors", GetNumLogicalProcessors},
+                    {"startAtLogin", StartAtLogin}
                 };
 
             return FunctionsDict.Select(kvp => kvp.Key).ToArray();
@@ -282,8 +284,22 @@ namespace WindowsHelperLib {
             return true.ToFREObject();
         }
 
-        public override void OnFinalize() {
-            
+        public FREObject StartAtLogin(FREContext ctx, uint argc, FREObject[] argv) {
+            var name = argv[0].AsString();
+            var start = argv[1].AsBool();
+            var rk = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
+
+            if (rk == null) return FREObject.Zero;
+            if (start) {
+                rk.SetValue(name, Process.GetCurrentProcess().MainModule.FileName);
+            }
+            else {
+                rk.DeleteValue(name, false);
+            }
+
+            return FREObject.Zero;
         }
+
+        public override void OnFinalize() { }
     }
 }
