@@ -11,6 +11,7 @@ setDisplayResolution()
 registerHotKey()   
 unregisterHotKey()   
 getNumLogicalProcessors()   
+startAtLogin()   
 
 
 ##### Windows Installation - Important!
