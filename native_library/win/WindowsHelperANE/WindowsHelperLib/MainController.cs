@@ -54,7 +54,7 @@ namespace WindowsHelperLib {
             var key = Convert.ToInt32(e.Key);
             var modifier = Convert.ToInt32(e.Modifiers);
             var sf = $"{{\"key\": {key}, \"modifier\": {modifier}}}";
-            Context.SendEvent("ON_HOT_KEY", sf);
+            Context.DispatchEvent("ON_HOT_KEY", sf);
             /*
              Alt = 1,
         Control = 2,
@@ -71,6 +71,7 @@ namespace WindowsHelperLib {
             if (!_isHotKeyManagerRegistered) {
                 HotKeyManager.HotKeyPressed += HotKeyManager_HotKeyPressed;
             }
+
             _isHotKeyManagerRegistered = true;
             return id.ToFREObject();
         }
@@ -93,6 +94,7 @@ namespace WindowsHelperLib {
                 _foundWindow = pList.MainWindowHandle;
                 return pList.MainWindowTitle.ToFREObject();
             }
+
             return FREObject.Zero;
         }
 
@@ -101,6 +103,7 @@ namespace WindowsHelperLib {
             if (WinApi.IsWindow(_foundWindow)) {
                 WinApi.ShowWindow(_foundWindow, maximise ? SW_SHOWMAXIMIZED : SW_RESTORE);
             }
+
             return FREObject.Zero;
         }
 
@@ -108,6 +111,7 @@ namespace WindowsHelperLib {
             if (WinApi.IsWindow(_foundWindow)) {
                 WinApi.ShowWindow(_foundWindow, SW_HIDE);
             }
+
             return FREObject.Zero;
         }
 
@@ -115,6 +119,7 @@ namespace WindowsHelperLib {
             if (WinApi.IsWindow(_foundWindow)) {
                 WinApi.SetForegroundWindow(_foundWindow);
             }
+
             return FREObject.Zero;
         }
 
@@ -134,7 +139,7 @@ namespace WindowsHelperLib {
         }
 
         public FREObject GetDisplayDevices(FREContext ctx, uint argc, FREObject[] argv) {
-            var vecDisplayDevices = new FREArray("Vector.<com.tuarua.DisplayDevice>");
+            var vecDisplayDevices = new FREArray("com.tuarua.DisplayDevice", 0);
 
             var dd = new DisplayDevice();
             dd.cb = Marshal.SizeOf(dd);
