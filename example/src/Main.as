@@ -47,6 +47,9 @@ public class Main extends Sprite {
         if (!hasActivated) {
             windowsHelper = new WindowsHelperANE();
             windowsHelper.init();
+
+            trace("App scaling:", windowsHelper.getScaleFactor());
+
             windowsHelper.addEventListener(HotKeyEvent.ON_HOT_KEY, onHotKeyEvent);
             var foundWindowTitle:String = windowsHelper.findWindowByTitle("Google Chrome");
              if (foundWindowTitle) {

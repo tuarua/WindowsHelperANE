@@ -96,6 +96,10 @@ public class WindowsHelperANE extends EventDispatcher {
         return int(ctx.call("getNumLogicalProcessors"));
     }
 
+    public function getScaleFactor():Number {
+        return Number(ctx.call("getScaleFactor"));
+    }
+
     public function startAtLogin(name:String, start:Boolean = true):void {
         ctx.call("startAtLogin", name, start);
     }

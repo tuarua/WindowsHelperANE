@@ -11,6 +11,7 @@ using static WindowsHelperLib.ShowWindowCommands;
 using FREObject = System.IntPtr;
 using FREContext = System.IntPtr;
 using Hwnd = System.IntPtr;
+using WinAPI = TuaRua.FreSharp.Utils.WinApi;
 
 namespace WindowsHelperLib {
     public class MainController : FreSharpMainController {
@@ -32,6 +33,7 @@ namespace WindowsHelperLib {
                     {"registerHotKey", RegisterHotKey},
                     {"unregisterHotKey", UnregisterHotKey},
                     {"getNumLogicalProcessors", GetNumLogicalProcessors},
+                    {"getScaleFactor", GetScaleFactor},
                     {"startAtLogin", StartAtLogin}
                 };
 
@@ -40,6 +42,10 @@ namespace WindowsHelperLib {
 
         public FREObject InitController(FREContext ctx, uint argc, FREObject[] argv) {
             return FREObject.Zero;
+        }
+
+        public FREObject GetScaleFactor(FREContext ctx, uint argc, FREObject[] argv) {
+            return WinAPI.GetScaleFactor().ToFREObject();
         }
 
         private void HotKeyManager_HotKeyPressed(object sender, HotKeyEventArgs e) {
