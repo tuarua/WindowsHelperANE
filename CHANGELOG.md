@@ -1,6 +1,3 @@
-### 1.2.0
-- Added new method getScaleFactor()
-
 ### 1.1.0
 - Use FreSharp 2.0.0
 

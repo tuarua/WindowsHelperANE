@@ -20,7 +20,6 @@ extern "C" {
 			,MAP_FUNCTION(registerHotKey)
 			,MAP_FUNCTION(unregisterHotKey)
 			,MAP_FUNCTION(getNumLogicalProcessors)
-			,MAP_FUNCTION(getScaleFactor)
 			,MAP_FUNCTION(startAtLogin)
 		};
 

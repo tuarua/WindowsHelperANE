@@ -12,7 +12,6 @@ registerHotKey()
 unregisterHotKey()   
 getNumLogicalProcessors()   
 startAtLogin()   
-getScaleFactor()    
 
 
 ##### Windows Installation - Important!
