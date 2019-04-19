@@ -11,6 +11,7 @@ using static WindowsHelperLib.ShowWindowCommands;
 using FREObject = System.IntPtr;
 using FREContext = System.IntPtr;
 using Hwnd = System.IntPtr;
+// ReSharper disable UnusedMember.Global
 
 namespace WindowsHelperLib {
     public class MainController : FreSharpMainController {
@@ -38,7 +39,7 @@ namespace WindowsHelperLib {
             return FunctionsDict.Select(kvp => kvp.Key).ToArray();
         }
 
-        public FREObject InitController(FREContext ctx, uint argc, FREObject[] argv) {
+        private FREObject InitController(FREContext ctx, uint argc, FREObject[] argv) {
             return FREObject.Zero;
         }
 
@@ -56,7 +57,7 @@ namespace WindowsHelperLib {
             */
         }
 
-        public FREObject RegisterHotKey(FREContext ctx, uint argc, FREObject[] argv) {
+        private FREObject RegisterHotKey(FREContext ctx, uint argc, FREObject[] argv) {
             var key = argv[0].AsInt();
             var modifier = argv[1].AsInt();
             var id = HotKeyManager.RegisterHotKey((Keys) key, (KeyModifiers) modifier);
@@ -68,17 +69,17 @@ namespace WindowsHelperLib {
             return id.ToFREObject();
         }
 
-        public FREObject UnregisterHotKey(FREContext ctx, uint argc, FREObject[] argv) {
+        private FREObject UnregisterHotKey(FREContext ctx, uint argc, FREObject[] argv) {
             var id = argv[0].AsInt();
             HotKeyManager.UnregisterHotKey(id);
             return FREObject.Zero;
         }
 
-        public FREObject GetNumLogicalProcessors(FREContext ctx, uint argc, FREObject[] argv) {
+        private FREObject GetNumLogicalProcessors(FREContext ctx, uint argc, FREObject[] argv) {
             return Environment.ProcessorCount.ToFREObject();
         }
 
-        public FREObject FindWindowByTitle(FREContext ctx, uint argc, FREObject[] argv) {
+        private FREObject FindWindowByTitle(FREContext ctx, uint argc, FREObject[] argv) {
             var searchTerm = argv[0].AsString();
             // ReSharper disable once SuggestVarOrType_SimpleTypes
             foreach (var pList in Process.GetProcesses()) {
@@ -90,7 +91,7 @@ namespace WindowsHelperLib {
             return FREObject.Zero;
         }
 
-        public FREObject ShowWindow(FREContext ctx, uint argc, FREObject[] argv) {
+        private FREObject ShowWindow(FREContext ctx, uint argc, FREObject[] argv) {
             var maximise = argv[0].AsBool();
             if (WinApi.IsWindow(_foundWindow)) {
                 WinApi.ShowWindow(_foundWindow, maximise ? SW_SHOWMAXIMIZED : SW_RESTORE);
@@ -99,7 +100,7 @@ namespace WindowsHelperLib {
             return FREObject.Zero;
         }
 
-        public FREObject HideWindow(FREContext ctx, uint argc, FREObject[] argv) {
+        private FREObject HideWindow(FREContext ctx, uint argc, FREObject[] argv) {
             if (WinApi.IsWindow(_foundWindow)) {
                 WinApi.ShowWindow(_foundWindow, SW_HIDE);
             }
@@ -107,7 +108,7 @@ namespace WindowsHelperLib {
             return FREObject.Zero;
         }
 
-        public FREObject SetForegroundWindow(FREContext ctx, uint argc, FREObject[] argv) {
+        private FREObject SetForegroundWindow(FREContext ctx, uint argc, FREObject[] argv) {
             if (WinApi.IsWindow(_foundWindow)) {
                 WinApi.SetForegroundWindow(_foundWindow);
             }
@@ -130,8 +131,8 @@ namespace WindowsHelperLib {
                                                         && item.RefreshRate == check.RefreshRate);
         }
 
-        public FREObject GetDisplayDevices(FREContext ctx, uint argc, FREObject[] argv) {
-            var vecDisplayDevices = new FREArray("com.tuarua.DisplayDevice", 0);
+        private FREObject GetDisplayDevices(FREContext ctx, uint argc, FREObject[] argv) {
+            var vecDisplayDevices = new FREArray("com.tuarua.DisplayDevice");
 
             var dd = new DisplayDevice();
             dd.cb = Marshal.SizeOf(dd);
@@ -220,7 +221,7 @@ namespace WindowsHelperLib {
             return vecDisplayDevices.RawValue;
         }
 
-        public FREObject SetDisplayResolution(FREContext ctx, uint argc, FREObject[] argv) {
+        private FREObject SetDisplayResolution(FREContext ctx, uint argc, FREObject[] argv) {
             var key = argv[0].AsString();
             var newWidth = argv[1].AsInt();
             var newHeight = argv[2].AsInt();
@@ -252,7 +253,7 @@ namespace WindowsHelperLib {
                 : (WinApi.ChangeDisplaySettings(ref dm, 0) == 0).ToFREObject();
         }
 
-        public FREObject RestartApp(FREContext ctx, uint argc, FREObject[] argv) {
+        private FREObject RestartApp(FREContext ctx, uint argc, FREObject[] argv) {
             var delay = argv[0].AsInt();
             var wmiQuery =
                 $"select CommandLine from Win32_Process where Name='{Process.GetCurrentProcess().ProcessName}.exe'";
@@ -271,7 +272,7 @@ namespace WindowsHelperLib {
             return true.ToFREObject();
         }
 
-        public FREObject StartAtLogin(FREContext ctx, uint argc, FREObject[] argv) {
+        private FREObject StartAtLogin(FREContext ctx, uint argc, FREObject[] argv) {
             var name = argv[0].AsString();
             var start = argv[1].AsBool();
             var rk = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);

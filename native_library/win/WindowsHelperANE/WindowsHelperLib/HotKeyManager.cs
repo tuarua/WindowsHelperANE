@@ -10,7 +10,7 @@ namespace WindowsHelperLib {
         public static int RegisterHotKey(Keys key, KeyModifiers modifiers) {
             WindowReadyEvent.WaitOne();
             var id = Interlocked.Increment(ref _id);
-            _wnd.Invoke(new RegisterHotKeyDelegate(RegisterHotKeyInternal), _hwnd, id, (uint)modifiers, (uint)key);
+            _wnd.Invoke(new RegisterHotKeyDelegate(RegisterHotKeyInternal), _hwnd, id, (uint) modifiers, (uint) key);
             return id;
         }
 
@@ -37,9 +37,10 @@ namespace WindowsHelperLib {
         private static volatile MessageWindow _wnd;
         private static volatile IntPtr _hwnd;
         private static readonly ManualResetEvent WindowReadyEvent = new ManualResetEvent(false);
+
         static HotKeyManager() {
             var messageLoop =
-                new Thread(delegate () { Application.Run(new MessageWindow()); }) {
+                new Thread(delegate() { Application.Run(new MessageWindow()); }) {
                     Name = "MessageLoopThread",
                     IsBackground = true
                 };
@@ -90,9 +91,9 @@ namespace WindowsHelperLib {
         }
 
         public HotKeyEventArgs(IntPtr hotKeyParam) {
-            var param = (uint)hotKeyParam.ToInt64();
-            Key = (Keys)((param & 0xffff0000) >> 16);
-            Modifiers = (KeyModifiers)(param & 0x0000ffff);
+            var param = (uint) hotKeyParam.ToInt64();
+            Key = (Keys) ((param & 0xffff0000) >> 16);
+            Modifiers = (KeyModifiers) (param & 0x0000ffff);
         }
     }
 
