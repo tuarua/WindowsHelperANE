@@ -1,6 +1,7 @@
 package {
 
 import com.tuarua.DisplayDevice;
+import com.tuarua.FreSharp;
 import com.tuarua.HotKeyEvent;
 import com.tuarua.HotKeyModifier;
 import com.tuarua.WindowsHelperANE;
@@ -13,6 +14,7 @@ import flash.system.Capabilities;
 import flash.ui.Keyboard;
 
 public class Main extends Sprite {
+    private var freSharpANE:FreSharp = new FreSharp(); // must create before all others
     private var windowsHelper:WindowsHelperANE;
     private var btn:Sprite = new Sprite();
     private var hasActivated:Boolean;
@@ -123,6 +125,7 @@ public class Main extends Sprite {
 
     private function onExiting(event:Event):void {
         windowsHelper.dispose();
+        freSharpANE.dispose();
     }
 
 }
