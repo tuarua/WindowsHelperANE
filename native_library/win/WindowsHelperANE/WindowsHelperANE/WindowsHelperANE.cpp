@@ -5,7 +5,6 @@
 extern "C" {
 
 	CONTEXT_INIT(TRWH) {
-
 		FREBRIDGE_INIT
 
 			static FRENamedFunction extensionFunctions[] = {
@@ -24,7 +23,6 @@ extern "C" {
 		};
 
 		SET_FUNCTIONS
-
 	}
 
 	CONTEXT_FIN(TRWH) {

@@ -31,6 +31,7 @@
         </excludedEntries>
       </libraryPathEntry>
       <libraryPathEntry kind="5" linkType="2" path="${DOCUMENTS}/WindowsHelperANE/native_extension/ane/WindowsHelperANE.ane"/>
+      <libraryPathEntry kind="5" linkType="2" path="${DOCUMENTS}/WindowsHelperANE/native_extension/ane/FreSharp.ane"/>
     </libraryPath>
     <sourceAttachmentPath/>
   </compiler>
@@ -49,6 +50,7 @@
         <airExcludes/>
         <anePaths>
           <anePathEntry path="${DOCUMENTS}/WindowsHelperANE/native_extension/ane/WindowsHelperANE.ane"/>
+          <anePathEntry path="${DOCUMENTS}/WindowsHelperANE/native_extension/ane/FreSharp.ane"/>
         </anePaths>
         <newLaunchParams/>
         <modifiedLaunchParams/>
