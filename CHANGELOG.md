@@ -1,3 +1,6 @@
+### 1.5.0
+- Use FreSharp 2.3.0
+
 ### 1.4.0
 - C# binaries are now packaged inside the ANE. All of these need to be deleted from your AIRSDK 
 - FreSharp.ane is now a required dependency for Windows. 
