@@ -1,3 +1,6 @@
+### 1.6.0
+- Use FreSharp 2.4.0
+
 ### 1.5.0
 - Use FreSharp 2.3.0
 
